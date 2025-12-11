@@ -2,6 +2,8 @@ import express, { Request, Response } from 'express';
 import cors from 'cors';
 import { config } from './config';
 import { testConnection } from './database';
+import authRoutes from './routes/auth.routes';
+import { errorHandler } from './middleware/errorHandler';
 
 const app = express();
 
@@ -25,6 +27,10 @@ app.get('/', (_req: Request, res: Response) => {
     version: '1.0.0',
   });
 });
+
+app.use('/auth', authRoutes);
+
+app.use(errorHandler);
 
 const server = app.listen(config.port, () => {
   console.log(`Server is running on port ${config.port}`);
