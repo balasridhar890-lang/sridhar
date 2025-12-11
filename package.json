@@ -1,0 +1,22 @@
+{
+  "name": "monorepo-root",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "mobile",
+    "server"
+  ],
+  "scripts": {
+    "install:all": "yarn install",
+    "mobile": "yarn workspace mobile",
+    "server": "yarn workspace server",
+    "lint": "yarn workspaces run lint",
+    "test": "yarn workspaces run test",
+    "dev:server": "yarn workspace server dev",
+    "start:mobile": "yarn workspace mobile start"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "yarn": ">=1.22.0"
+  }
+}
