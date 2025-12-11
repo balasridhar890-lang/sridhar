@@ -13,6 +13,11 @@ export interface Config {
     user: string;
     password: string;
   };
+  jwt: {
+    secret: string;
+    accessTokenExpiry: string;
+    refreshTokenExpiry: string;
+  };
 }
 
 export const config: Config = {
@@ -24,5 +29,10 @@ export const config: Config = {
     name: process.env.DB_NAME || 'myapp',
     user: process.env.DB_USER || 'postgres',
     password: process.env.DB_PASSWORD || 'postgres',
+  },
+  jwt: {
+    secret: process.env.JWT_SECRET || 'your_jwt_secret_key_change_this_in_production',
+    accessTokenExpiry: process.env.JWT_ACCESS_TOKEN_EXPIRY || '15m',
+    refreshTokenExpiry: process.env.JWT_REFRESH_TOKEN_EXPIRY || '7d',
   },
 };
