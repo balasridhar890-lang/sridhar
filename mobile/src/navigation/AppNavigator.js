@@ -9,6 +9,7 @@ import SignUpScreen from '../screens/SignUpScreen';
 
 // Authenticated screens
 import HomeScreen from '../screens/HomeScreen';
+import DayPlanScreen from '../screens/DayPlanScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -41,11 +42,20 @@ function AppNavigator() {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       {isAuthenticated ? (
-        <Stack.Screen 
-          name="Home" 
-          component={HomeScreen}
-          options={{headerShown: false}}
-        />
+        <>
+          <Stack.Screen 
+            name="Home" 
+            component={HomeScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen 
+            name="DayPlan" 
+            component={DayPlanScreen}
+            options={{
+              headerShown: false,
+            }}
+          />
+        </>
       ) : (
         <Stack.Screen 
           name="Auth" 

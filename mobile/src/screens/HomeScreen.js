@@ -12,7 +12,7 @@ import {
 import {useSelector, useDispatch} from 'react-redux';
 import {logoutUser} from '../store/authSlice';
 
-function HomeScreen() {
+function HomeScreen({navigation}) {
   const isDarkMode = useColorScheme() === 'dark';
   const {user, isLoading} = useSelector(state => state.auth);
   const dispatch = useDispatch();
@@ -34,6 +34,10 @@ function HomeScreen() {
         {text: 'Logout', style: 'destructive', onPress: () => dispatch(logoutUser())},
       ]
     );
+  };
+
+  const handleNavigateToDayPlan = () => {
+    navigation.navigate('DayPlan');
   };
 
   if (isLoading) {
@@ -58,6 +62,13 @@ function HomeScreen() {
           <Text style={[styles.userInfo, textStyle]}>Name: {user?.name || 'N/A'}</Text>
           <Text style={[styles.userInfo, textStyle]}>Email: {user?.email || 'N/A'}</Text>
         </View>
+
+        <TouchableOpacity
+          style={styles.dayPlanButton}
+          onPress={handleNavigateToDayPlan}
+        >
+          <Text style={styles.dayPlanButtonText}>Day Planner</Text>
+        </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.logoutButton}
@@ -114,6 +125,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 8,
     opacity: 0.8,
+  },
+  dayPlanButton: {
+    backgroundColor: '#10b981',
+    borderRadius: 8,
+    paddingVertical: 16,
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  dayPlanButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '600',
   },
   logoutButton: {
     backgroundColor: '#e53e3e',
