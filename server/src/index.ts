@@ -2,12 +2,18 @@ import express, { Request, Response } from 'express';
 import cors from 'cors';
 import { config } from './config';
 import { testConnection } from './database';
+import { authRouter } from './routes/auth.routes';
+import { plansRouter } from './routes/plans.routes';
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Routes
+app.use('/auth', authRouter);
+app.use('/plans', plansRouter);
 
 app.get('/health', async (_req: Request, res: Response) => {
   const dbConnected = await testConnection();
