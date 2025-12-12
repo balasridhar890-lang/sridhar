@@ -59,7 +59,15 @@ docker-compose up postgres
 cp server/.env.example server/.env
 ```
 
-3. Start the development server:
+Edit the `.env` file and add your OpenAI API key and JWT secret.
+
+3. Run database migrations:
+
+```bash
+yarn workspace server migrate
+```
+
+4. Start the development server:
 
 ```bash
 yarn workspace server dev
@@ -77,6 +85,13 @@ The server will be available at `http://localhost:3000`.
 
 - `GET /` - Basic server info
 - `GET /health` - Health check endpoint with database connection status
+- `POST /auth/register` - Register a new user
+- `POST /auth/login` - Login and get JWT token
+- `POST /plans/generate` - Generate AI-powered daily plan (auth required)
+- `GET /plans/today` - Get today's plan (auth required)
+- `GET /plans/:date` - Get plan by date (auth required)
+
+See [API.md](server/API.md) for detailed API documentation.
 
 ### Mobile (React Native)
 
@@ -123,6 +138,7 @@ yarn workspace mobile android
 - `yarn workspace server dev` - Start development server with hot reload
 - `yarn workspace server build` - Build TypeScript to JavaScript
 - `yarn workspace server start` - Run production build
+- `yarn workspace server migrate` - Run database migrations
 - `yarn workspace server test` - Run Jest tests
 - `yarn workspace server lint` - Run ESLint
 - `yarn workspace server format` - Format code with Prettier
@@ -142,7 +158,10 @@ yarn workspace mobile android
 - **Framework**: Express
 - **Language**: TypeScript
 - **Database**: PostgreSQL
-- **Testing**: Jest
+- **Authentication**: JWT (JSON Web Tokens)
+- **AI Integration**: OpenAI GPT-4 for daily plan generation
+- **Security**: bcrypt for password hashing, express-rate-limit for API protection
+- **Testing**: Jest with mocked dependencies
 - **Linting**: ESLint + Prettier
 - **Dev Tools**: ts-node-dev for hot reload
 
@@ -167,13 +186,24 @@ Data is persisted in a Docker volume named `postgres_data`.
 
 ### Server (.env)
 ```
+# Server Configuration
 PORT=3000
 NODE_ENV=development
+
+# Database Configuration
 DB_HOST=localhost
 DB_PORT=5432
 DB_NAME=myapp
 DB_USER=postgres
 DB_PASSWORD=postgres
+
+# JWT Configuration
+JWT_SECRET=your-secret-key-change-in-production
+JWT_EXPIRES_IN=7d
+
+# OpenAI Configuration
+OPENAI_API_KEY=your-openai-api-key-here
+OPENAI_MODEL=gpt-4
 ```
 
 ### Mobile (.env)
